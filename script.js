@@ -289,6 +289,7 @@ async function fetchCountriesSearch(search) {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
         let flagnumber = 0;
+        let countryamount = 0;
 
         for (; flagnumber < data.length;) {
             for (let j = 0; j < 4; j++) {
@@ -298,6 +299,7 @@ async function fetchCountriesSearch(search) {
                     continue;
                 }
                 if(data[flagnumber].name.common.includes(search) == true){
+                    countryamount = 1;
                     main.innerHTML += `
                     <div class="country">
                         <div class="flag">
@@ -316,6 +318,10 @@ async function fetchCountriesSearch(search) {
                 
 
             }
+
+        }
+        if(countryamount == 0){
+            main.innerHTML='<div><h1>No country data</h1></div>';
         }
 
         addEventListeners(data);
@@ -323,8 +329,8 @@ async function fetchCountriesSearch(search) {
     } catch (error) {
         console.error("Error fetching countries:", error);
     }
-}
 
+}
 
 fetchCountries();
 // fetchCountriesAfrica();
